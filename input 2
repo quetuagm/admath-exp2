@@ -1,0 +1,73 @@
+a=input('Input the boundary a: ');
+b=input('Input the boundary b: ');
+epsi=input('Input the error tolerance: ');
+
+fxa= exp(-a)-log(a);
+fxb=exp(-b)-log(b);
+
+if (((fxa)*(fxb)) <0)
+c=(a+b)/2;
+fxc=exp(-c)-log(c);
+k=1;
+
+d= a- (fxa*(b-a))/(fxb-fxa);
+fxd=exp(-d)-log(d);
+e=1;
+
+outerloop=true;
+innerloop=true;
+
+while outerloop == true
+  
+    while innerloop == true
+        if ((fxd<0) && (fxb<0))
+            fxb=fxd;
+            b=d;
+        elseif ((fxd>0) &&(fxb>0))
+            fxb=fxd;
+            b=d;
+        elseif ((fxd<0) && (fxa<0))
+            fxa=fxd;
+            a=d;
+        elseif ((fxd>0) && (fxa>0))
+            fxa=fxd;
+            a=d;
+        end
+        
+        d= a- (fxa*(b-a))/(fxb-fxa);
+        e=e+1;
+        fxd=exp(-d)-log(d);
+        if abs(fxd)<=epsi
+            innerloop=false;
+        end
+    end
+    
+    if ((fxc<0) && (fxb<0))
+        fxb=fxc;
+        b=c;
+    elseif ((fxc>0) &&(fxb>0))
+        fxb=fxc;
+        b=c;
+        
+    elseif ((fxc<0) && (fxa<0))
+        fxa= fxc;
+        a=c;
+    elseif ((fxc>0) &&(fxa>0))
+        fxa= fxc;
+        a=c;
+    end
+    
+    c=(a+b)/2;
+    fxc= exp(-c)-log(c);
+    k=k+1;
+    if abs(fxc)<= epsi
+        outerloop = false;
+    end
+end
+
+fprintf('Root value is %f after %.f of iterations using bisection method\n', c, k);
+fprintf('Root value is %f after %.f of iterations using regula-falsi method\n', d, e);
+
+else
+    disp('error interval');
+end
