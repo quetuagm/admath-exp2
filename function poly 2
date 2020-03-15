@@ -1,0 +1,29 @@
+function [r,k]=polybisection(coef,a,b,epsilon)
+ fxa=polyval(coef,a);
+ fxb=polyval(coef,b);
+ 
+ value= (fxa)*(fxb);
+ k=1;
+ if value>=0
+     disp('Wrong interval')
+ end
+ if check<=0 
+     r=(a+b)/2;
+     fxc=polyval(coef,r);
+ end
+ while abs(fxc)>=epsilon
+     if fxc<0 && fxb < 0 
+         fxb=fxc;
+         b=r;
+     elseif fxc>0 && fb >0 
+         fxa = fxc;
+         b=r;
+     elseif fxc > 0 && fa > 0
+         fxa=fxc;
+         a=r;
+     end
+     r=(a+b)/2;
+     fxc=polyval(coef,r);
+     k=k+1;
+ end
+ fprintf('Root value is %.f after %.f of iterations using polybisection method\n', r,k);
